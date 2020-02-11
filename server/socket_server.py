@@ -29,12 +29,12 @@ class TCPServer:
         return self.socket.accept()
 
     def process_request(self, request, client_address):
-        handler = self.HandleClass(request, client_address)
-        handler.handler()
+        handler = self.HandleClass(self, request, client_address)
+        handler.handle()
         pass
 
     def close_request(self, request):
-        request.shutdown()
+        request.shutdown(socket.SHUT_WR)
         request.close()
         pass
 

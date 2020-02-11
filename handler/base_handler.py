@@ -6,7 +6,6 @@ class BaseRequestHandler:
         self.server = server
         self.request = request
         self.client_address = client_address
-        pass
 
     def handle(self):
         pass
@@ -52,3 +51,5 @@ class StreamRequestHandler(BaseRequestHandler):
         self.wfile.close()
         self.rfile.close()
 
+    def handle(self):
+        pass
