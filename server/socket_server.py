@@ -1,8 +1,8 @@
 # -*- encoding:utf-8 -*-
 
 
-import wsgiref
 import socket
+import threading
 
 
 class TCPServer:
@@ -19,11 +19,10 @@ class TCPServer:
         while not self.is_shutdown:
             request, client_address = self.get_request()
             try:
-                self.process_request(request, client_address)
+                # self.process_request(request, client_address)
+                self.process_request_mutithread(request, client_address)
             except Exception as e:
                 print(e)
-            finally:
-                self.close_request(request)
 
     def get_request(self):
         return self.socket.accept()
@@ -31,12 +30,16 @@ class TCPServer:
     def process_request(self, request, client_address):
         handler = self.HandleClass(self, request, client_address)
         handler.handle()
-        pass
+        self.close_request(request)
+
+    def process_request_mutithread(self, request, client_address):
+        t = threading.Thread(target=self.process_request,
+                             args=(request, client_address))
+        t.start()
 
     def close_request(self, request):
         request.shutdown(socket.SHUT_WR)
         request.close()
-        pass
 
     def shutdown(self):
         self.is_shutdown = True

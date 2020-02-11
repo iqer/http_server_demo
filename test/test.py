@@ -22,12 +22,12 @@ class TestBaseRequestHandler(StreamRequestHandler):
 class SocketServerTest:
 
     def run_server(self):
-        tcp_server = TCPServer(('127.0.0.1', 8888), TestBaseRequestHandler)
+        tcp_server = TCPServer(('127.0.0.1', 8889), TestBaseRequestHandler)
         tcp_server.server_forever()
 
     def client_connect(self):
         client = socket.socket()
-        client.connect(('127.0.0.1', 8888))
+        client.connect(('127.0.0.1', 8889))
         client.send(b'Hello TCPServer\r\n')
         msg = client.recv(1024)
         print('Client recv msg:' + msg.decode())
