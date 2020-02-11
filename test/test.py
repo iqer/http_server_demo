@@ -2,6 +2,7 @@
 
 import threading
 import socket
+import time
 
 from server.socket_server import TCPServer
 from handler.base_handler import StreamRequestHandler
@@ -12,6 +13,7 @@ class TestBaseRequestHandler(StreamRequestHandler):
     def handle(self):
         msg = self.readline()
         print('Server recv msg:' + msg)
+        time.sleep(1)
         self.write_content(msg)
         self.send()
         pass
