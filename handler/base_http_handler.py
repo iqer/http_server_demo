@@ -58,8 +58,8 @@ class BaseHttpRequestHandler(StreamRequestHandler):
     def parse_request(self):
         first_line = self.rfile.readline()
         self.request_line = first_line
-        # if not first_line:
-        #     return
+        if not self.request_line:
+            return
         words = first_line.split()
         self.method, self.path, self.version = words
 
